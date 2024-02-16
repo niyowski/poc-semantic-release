@@ -1,0 +1,25 @@
+name: Sync
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  create_pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create Pull Request
+        run: |
+          gh pr create \
+            --title "Automated PR - Update main from develop" \
+            --body "This is an automated pull request to update the main branch from the latest changes in develop." \
+            --base main \
+            --head develop \
+            --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.POC_TOKEN }}
