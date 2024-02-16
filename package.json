@@ -5,6 +5,7 @@
   "scripts": {
     "format": "prettier . --write --ignore-unknown --ignore-path .gitignore",
     "lint": "next lint --fix",
+    "typecheck": "tsc --noEmit",
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
