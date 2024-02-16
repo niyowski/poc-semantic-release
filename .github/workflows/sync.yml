@@ -22,4 +22,4 @@ jobs:
             --head develop \
             --repo ${{ github.repository }}
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.POC_TOKEN }}
