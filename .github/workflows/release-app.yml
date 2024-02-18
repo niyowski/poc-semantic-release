@@ -24,11 +24,14 @@ jobs:
           fetch-depth: 0
           token: ${{ steps.release_bot.outputs.token }}
 
-      - name: Allow update-charts script to execute
-        run: chmod +x ./update-charts.sh
+      - name: Install dependencies
+        run: npm ci
 
       - name: Verify signatures
         run: npm audit signatures
+
+      - name: Allow update-charts script to execute
+        run: chmod +x ./update-charts.sh
 
       - name: Semantic Release
         id: semantic
