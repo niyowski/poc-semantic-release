@@ -10,6 +10,14 @@ NEW_VERSION=$1
 # The file to update
 FILE="charts/values.yaml"
 
-# Use sed to replace the image/tag value
-sed -i '' "s|image/tag: .*|image/tag: $NEW_VERSION|" $FILE
+echo "New version: $NEW_VERSION"
+echo "File to update: $FILE"
 
+# Content of the file before the change
+cat $FILE
+
+# Use sed to replace the image/tag value
+sed -i "s|image/tag: .*|image/tag: $NEW_VERSION|" $FILE
+
+# Verify the change
+cat $FILE
