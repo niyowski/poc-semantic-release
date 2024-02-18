@@ -37,7 +37,8 @@ jobs:
         id: semantic
         uses: codfish/semantic-release-action@v3
         with:
-          branches: develop
+          branches: |
+            ['develop']
         env:
           GITHUB_TOKEN: ${{ steps.release_bot.outputs.token }}
 
