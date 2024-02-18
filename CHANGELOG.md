@@ -1,0 +1,19 @@
+# [0.4.0](https://github.com/niyowski/poc-semantic-release/compare/v0.3.0...v0.4.0) (2024-02-18)
+
+
+### Bug Fixes
+
+* add GH_TOKEN ([31932d0](https://github.com/niyowski/poc-semantic-release/commit/31932d05737efce1cee3aecb5fea928d1b371990))
+* allow update-charts script to execute ([252abde](https://github.com/niyowski/poc-semantic-release/commit/252abdec687981651ccb4810e57f978baad9a923))
+* do not persist credentials ([81b6bd7](https://github.com/niyowski/poc-semantic-release/commit/81b6bd724c29659520dc43171689644dba46ed99))
+* rename POC_TOKEN to GH_TOKEN ([8aea50d](https://github.com/niyowski/poc-semantic-release/commit/8aea50de630687332135e89aab7f323bf79540ab))
+* try fixing update-charts script ([cb6e254](https://github.com/niyowski/poc-semantic-release/commit/cb6e254c3a8dbec305a069959c7e9755b1563070))
+* update package-lock ([bd0d996](https://github.com/niyowski/poc-semantic-release/commit/bd0d996c7081e5c5746f5ed8244ca208530f1f71))
+* update release flow ([174cc84](https://github.com/niyowski/poc-semantic-release/commit/174cc8471d0bf5d9fb311676d6f6717cdc3cb408))
+* update sync and update-charts ([d3d175f](https://github.com/niyowski/poc-semantic-release/commit/d3d175f4a5d87925e9d850ec68d29a88e8c0dbba))
+* use poc token and update update-charts ([8a4f904](https://github.com/niyowski/poc-semantic-release/commit/8a4f9044f6e06e32f1e6963fad6aeeab8bd8c515))
+
+
+### Features
+
+* add node.js backend and use it as a custom server ([d5e15c5](https://github.com/niyowski/poc-semantic-release/commit/d5e15c5f53e3510d9fc0fc984aebe13966cef907))
