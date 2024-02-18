@@ -50,8 +50,25 @@ jobs:
       - run: echo "$OUTPUTS"
         env:
           OUTPUTS: ${{ toJson(steps.semantic.outputs) }}
-      - run: |
-          echo $RELEASE_VERSION
-          echo $RELEASE_MAJOR
-          echo $RELEASE_MINOR
-          echo $RELEASE_PATCH
+
+      - name: Create a new branch, commit changes, push the branch, and create a PR
+        if: steps.semantic.outputs.new-release-published == 'true'
+        run: |
+          git checkout -b release/v${{ steps.semantic.outputs.release-version }}
+          git add .
+          git commit -m "chore(release): ${{ steps.semantic.outputs.release-version }}"
+          git push origin release/v${{ steps.semantic.outputs.release-version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create PR using GH CLI
+        if: steps.semantic.outputs.new-release-published == 'true' && success()
+        run: |
+          gh pr create \
+            --title "Release v${{ steps.semantic.outputs.release-version }}" \
+            --body "${{ steps.semantic.outputs.release-notes }}" \
+            --base develop \
+            --head release/v${{ steps.semantic.outputs.release-version }}
+            --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}

@@ -24,20 +24,6 @@ module.exports = {
       },
     ],
 
-    // https://github.com/asbiin/semantic-release-github-pullrequest
-    [
-      "semantic-release-github-pullrequest",
-      {
-        assets: [
-          "charts/values.yaml",
-          "CHANGELOG.md",
-          "package.json",
-          "package-lock.json",
-        ],
-        baseRef: "develop",
-      },
-    ],
-
     // Not sure if this is needed. Let's keep it for now.
     // https://github.com/semantic-release/github
     "@semantic-release/github",
