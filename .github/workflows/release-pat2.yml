@@ -2,9 +2,10 @@ name: Release (PAT2)
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - develop
+  # Temporarily disabled to experiment with other options
+  # push:
+  #   branches:
+  #     - develop
 
 permissions:
   contents: write

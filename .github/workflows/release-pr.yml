@@ -1,18 +1,17 @@
-name: Release (PAT)
+name: Release (PR)
 
 on:
   workflow_dispatch:
-  # Temporarily disabled to experiment with other options
-  # push:
-  #   branches:
-  #     - develop
+  push:
+    branches:
+      - develop
 
 permissions:
   contents: write
   pull-requests: write
 
 jobs:
-  release-via-pat:
+  release-via-pr:
     runs-on: ubuntu-latest
 
     steps:
@@ -37,8 +36,22 @@ jobs:
       - name: Verify signatures
         run: npm audit signatures
 
-      - name: Release
-        run: npx semantic-release
+      - name: Semantic Release
+        id: semantic
+        uses: codfish/semantic-release-action@v3
+        with:
+          branches: |
+            ['develop']
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: echo ${{ steps.semantic.outputs.release-version }}
+      - run: echo "$OUTPUTS"
+        env:
+          OUTPUTS: ${{ toJson(steps.semantic.outputs) }}
+      - run: |
+          echo $RELEASE_VERSION
+          echo $RELEASE_MAJOR
+          echo $RELEASE_MINOR
+          echo $RELEASE_PATCH

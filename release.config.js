@@ -24,9 +24,9 @@ module.exports = {
       },
     ],
 
-    // https://github.com/semantic-release/git
+    // https://github.com/asbiin/semantic-release-github-pullrequest
     [
-      "@semantic-release/git",
+      "semantic-release-github-pullrequest",
       {
         assets: [
           "charts/values.yaml",
@@ -34,11 +34,11 @@ module.exports = {
           "package.json",
           "package-lock.json",
         ],
-        message:
-          "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}",
+        baseRef: "develop",
       },
     ],
 
+    // Not sure if this is needed. Let's keep it for now.
     // https://github.com/semantic-release/github
     "@semantic-release/github",
   ],
