@@ -19,7 +19,7 @@ jobs:
           PR_EXISTS=$(gh pr list --base main --head develop --repo ${{ github.repository }} | wc -l)
           echo "::set-output name=exists::$PR_EXISTS"
         env:
-          GH_TOKEN: ${{ secrets.POC_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Create Pull Request
         if: steps.check_pr.outputs.exists == '0'
@@ -31,4 +31,4 @@ jobs:
             --head develop \
             --repo ${{ github.repository }}
         env:
-          GH_TOKEN: ${{ secrets.POC_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
