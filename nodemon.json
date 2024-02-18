@@ -1,0 +1,6 @@
+{
+  "ignore": ["**/routes.ts", "**/swagger.json"],
+  "watch": ["src", "server"],
+  "exec": "tsoa spec-and-routes -c server/tsoa.json && ts-node server/src/index.ts",
+  "ext": "ts,tsx"
+}
