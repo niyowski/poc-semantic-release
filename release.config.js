@@ -43,9 +43,5 @@ module.exports = {
         prepareCmd: "./update-charts.sh ${nextRelease.version}",
       },
     ],
-
-    // Not sure if this is needed. Let's keep it for now.
-    // https://github.com/semantic-release/github
-    "@semantic-release/github",
   ],
 };
