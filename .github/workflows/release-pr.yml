@@ -51,11 +51,14 @@ jobs:
         env:
           OUTPUTS: ${{ toJson(steps.semantic.outputs) }}
 
-      - name: Create a PR
-        if: steps.semantic.outputs.new-release-published == 'true'
+      - name: Configure Git
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+      - name: Create a PR
+        if: steps.semantic.outputs.new-release-published == 'true'
+        run: |
           git checkout -b release/v${{ steps.semantic.outputs.release-version }}
           git add .
           git commit -m "chore(release): ${{ steps.semantic.outputs.release-version }}"
