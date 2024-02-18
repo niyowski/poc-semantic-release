@@ -1,3 +1,20 @@
+# [0.5.0](https://github.com/niyowski/poc-semantic-release/compare/v0.4.0...v0.5.0) (2024-02-18)
+
+
+### Bug Fixes
+
+* another attempt to make it work ([da60dac](https://github.com/niyowski/poc-semantic-release/commit/da60dac9a4b655986dbc16613b156ce2b0a66243))
+* fix app workflow ([c22c5b4](https://github.com/niyowski/poc-semantic-release/commit/c22c5b408750769631ed130f1c67a78f788019df))
+* fix release app workflow ([dbfc88b](https://github.com/niyowski/poc-semantic-release/commit/dbfc88b3a3e8df4298cb82ad251316aa5f2ef240))
+* release on dev ([790ca4d](https://github.com/niyowski/poc-semantic-release/commit/790ca4df77b6a44f7f36cf3241808e1bde1ed78b))
+* try another way ([03555c5](https://github.com/niyowski/poc-semantic-release/commit/03555c52c80b06fdbe875d26a9ebd82bc3f4c98f))
+
+
+### Features
+
+* a new approach to pat ([3f9144b](https://github.com/niyowski/poc-semantic-release/commit/3f9144b10739be71781ad1b2780c001faa795ee9))
+* release with github app ([e69a9d8](https://github.com/niyowski/poc-semantic-release/commit/e69a9d8732d1473efc0a1dc5eb8a6321da114802))
+
 # [0.4.0](https://github.com/niyowski/poc-semantic-release/compare/v0.3.0...v0.4.0) (2024-02-18)
 
 
