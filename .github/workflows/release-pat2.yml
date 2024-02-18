@@ -1,39 +1,40 @@
-name: Release (App)
+name: Release (PAT2)
 
 on:
   workflow_dispatch:
-  # Requires an org to work
-  # push:
-  #   branches:
-  #     - develop
+  push:
+    branches:
+      - develop
+
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
-  release-via-app:
+  release-via-pat-2:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Release bot
-        id: release_bot
-        uses: tibdex/github-app-token@v2
-        with:
-          app_id: ${{ secrets.RELEASE_BOT_ID }}
-          private_key: ${{ secrets.RELEASE_BOT_KEY }}
-
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          persist-credentials: false # This was added as an attempt to fix, but it may not be required
-          token: ${{ steps.release_bot.outputs.token }}
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Verify signatures
-        run: npm audit signatures
-
       - name: Allow update-charts script to execute
         run: chmod +x ./update-charts.sh
+
+      - name: Verify signatures
+        run: npm audit signatures
 
       - name: Semantic Release
         id: semantic
@@ -42,7 +43,8 @@ jobs:
           branches: |
             ['develop']
         env:
-          GITHUB_TOKEN: ${{ steps.release_bot.outputs.token }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - run: echo ${{ steps.semantic.outputs.release-version }}
       - run: echo "$OUTPUTS"
