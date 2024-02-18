@@ -1,17 +1,17 @@
-name: Release
+name: Release (PAT)
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - develop
+  # push:
+  #   branches:
+  #     - develop
 
 permissions:
   contents: write
   pull-requests: write
 
 jobs:
-  release:
+  release-via-pat:
     runs-on: ubuntu-latest
 
     steps:
