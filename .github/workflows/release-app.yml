@@ -11,9 +11,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Allow update-charts script to execute
-        run: chmod +x ./update-charts.sh
-
       - name: Release bot
         id: release_bot
         uses: tibdex/github-app-token@v2
@@ -26,6 +23,9 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ steps.release_bot.outputs.token }}
+
+      - name: Allow update-charts script to execute
+        run: chmod +x ./update-charts.sh
 
       - name: Verify signatures
         run: npm audit signatures
