@@ -17,7 +17,7 @@ echo "File to update: $FILE"
 cat $FILE
 
 # Use sed to replace the image/tag value
-sed -i "" "s/tag: .*/tag: $NEW_VERSION/" $FILE
+sed -i "s/tag: .*/tag: $NEW_VERSION/" $FILE
 
 # Verify the change
 cat $FILE
