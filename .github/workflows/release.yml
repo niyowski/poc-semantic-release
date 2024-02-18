@@ -7,15 +7,12 @@ on:
       - develop
 
 permissions:
-  contents: read
+  contents: write
+  pull-requests: write
 
 jobs:
   release:
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
-      pull-requests: write
 
     steps:
       - name: Checkout code
@@ -39,7 +36,7 @@ jobs:
         run: npm audit signatures
 
       - name: Release
-        run: npx semantic-release
         env:
-          GH_TOKEN: ${{ secrets.POC_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release

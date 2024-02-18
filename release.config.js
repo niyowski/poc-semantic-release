@@ -10,11 +10,11 @@ module.exports = {
     // https://github.com/semantic-release/release-notes-generator
     "@semantic-release/release-notes-generator",
 
-    // https://github.com/semantic-release/npm
-    "@semantic-release/npm",
-
     // https://github.com/semantic-release/changelog
     "@semantic-release/changelog",
+
+    // https://github.com/semantic-release/npm
+    "@semantic-release/npm",
 
     // https://github.com/semantic-release/exec
     [
