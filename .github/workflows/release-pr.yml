@@ -53,21 +53,28 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
 
-      - name: Create a PR
+      - name: Commit changes
         if: steps.semantic.outputs.new-release-published == 'true'
         run: |
           git checkout -b release/v${{ steps.semantic.outputs.release-version }}
           git add .
-          git commit -m "chore(release): ${{ steps.semantic.outputs.release-version }}"
-          git push origin release/v${{ steps.semantic.outputs.release-version }}
+          git commit -am "chore(release): ${{ steps.semantic.outputs.release-version }}"
+          git push -u origin release/v${{ steps.semantic.outputs.release-version }}
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create a PR
+        if: steps.semantic.outputs.new-release-published == 'true' && success()
+        run: |
           gh pr create \
             --title "Release v${{ steps.semantic.outputs.release-version }}" \
             --body "${{ steps.semantic.outputs.release-notes }}" \
             --base develop \
-            --head release/v${{ steps.semantic.outputs.release-version }}
+            --head release/v${{ steps.semantic.outputs.release-version }} \
             --repo ${{ github.repository }}
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
