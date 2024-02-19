@@ -1,3 +1,21 @@
+# [0.6.0](https://github.com/niyowski/poc-semantic-release/compare/v0.5.0...v0.6.0) (2024-02-19)
+
+
+### Bug Fixes
+
+* configure git ([33fed99](https://github.com/niyowski/poc-semantic-release/commit/33fed99a1d3b21edcc0933bc7214fad98ca95581))
+* fix permissions ([7b2c2f1](https://github.com/niyowski/poc-semantic-release/commit/7b2c2f10ddef642067cf5ce8339bf85220378b18))
+* fix token ([6c6a204](https://github.com/niyowski/poc-semantic-release/commit/6c6a2044ed6000451ae99f98feb2fa206c8be3b9))
+* last try ([882af28](https://github.com/niyowski/poc-semantic-release/commit/882af28d3d0e685342db7693d3cdef84fcab5422))
+* separate steps ([51c830e](https://github.com/niyowski/poc-semantic-release/commit/51c830ef45a642028f879a77b5780234f2549c7c))
+* set commit author ([ac8385f](https://github.com/niyowski/poc-semantic-release/commit/ac8385f190ea9a97ed3a6b2b5c7bf119e5a682bd))
+
+
+### Features
+
+* add release rules ([7805b84](https://github.com/niyowski/poc-semantic-release/commit/7805b84c2481f268d7c826dffb6b932bac1ad7f3))
+* release via pr ([57e5a25](https://github.com/niyowski/poc-semantic-release/commit/57e5a25f9d5ba7f32cf6c174a7efa506bc64dcc8))
+
 # [0.5.0](https://github.com/niyowski/poc-semantic-release/compare/v0.4.0...v0.5.0) (2024-02-18)
 
 
