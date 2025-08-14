@@ -1,0 +1,50 @@
+version: 2
+
+updates:
+  # GitHub Actions updates
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+      time: '00:00'
+    open-pull-requests-limit: 1
+    commit-message:
+      prefix: 'ci'
+      include: 'scope'
+
+  # Security updates
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+      time: '00:00'
+    commit-message:
+      prefix: 'fix'
+      include: 'scope'
+    groups:
+      security-updates:
+        applies-to: security-updates
+        patterns: ['*']
+
+  # Version updates
+  - package-ecosystem: 'npm'
+    target-branch: 'main'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+      time: '00:00'
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: 'chore'
+      include: 'scope'
+    groups:
+      production-dependencies:
+        applies-to: 'version-updates'
+        dependency-type: 'production'
+        update-types: ['minor', 'patch']
+        patterns: ['*']
+      development-dependencies:
+        applies-to: 'version-updates'
+        dependency-type: 'development'
+        update-types: ['minor', 'patch']
+        patterns: ['*']
