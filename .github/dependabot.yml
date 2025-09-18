@@ -7,6 +7,7 @@ updates:
     schedule:
       interval: 'daily'
       time: '00:00'
+      timezone: 'Asia/Almaty'
     open-pull-requests-limit: 1
     commit-message:
       prefix: 'ci'
@@ -18,13 +19,15 @@ updates:
     schedule:
       interval: 'daily'
       time: '00:00'
+      timezone: 'Asia/Almaty'
     commit-message:
       prefix: 'fix'
       include: 'scope'
     groups:
       security-updates:
         applies-to: security-updates
-        patterns: ['*']
+        patterns:
+          - '*'
 
   # Version updates
   - package-ecosystem: 'npm'
@@ -33,7 +36,8 @@ updates:
     schedule:
       interval: 'daily'
       time: '00:00'
-    open-pull-requests-limit: 3
+      timezone: 'Asia/Almaty'
+    open-pull-requests-limit: 1
     commit-message:
       prefix: 'chore'
       include: 'scope'
@@ -41,10 +45,16 @@ updates:
       production-dependencies:
         applies-to: 'version-updates'
         dependency-type: 'production'
-        update-types: ['minor', 'patch']
-        patterns: ['*']
+        update-types:
+          - 'minor'
+          - 'patch'
+        patterns:
+          - '*'
       development-dependencies:
         applies-to: 'version-updates'
         dependency-type: 'development'
-        update-types: ['minor', 'patch']
-        patterns: ['*']
+        update-types:
+          - 'minor'
+          - 'patch'
+        patterns:
+          - '*'
