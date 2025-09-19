@@ -18,6 +18,7 @@ jobs:
         uses: dependabot/fetch-metadata@v2
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
+          skip-commit-verification: true
 
       - name: Auto-approve and enable auto-merge for minor and patch updates
         if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch' }}
