@@ -17,7 +17,7 @@ jobs:
         id: metadata
         uses: dependabot/fetch-metadata@v2
         with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          github-token: "${{ secrets.PR_AUTOMATION }}"
           skip-commit-verification: true
 
       - name: Auto-approve and enable auto-merge for security updates
@@ -32,7 +32,7 @@ jobs:
           echo "✅ Auto-approved and enabled auto-merge for security updates: ${{ steps.metadata.outputs.dependency-names }}"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PR_AUTOMATION }}
 
       - name: Auto-approve and enable auto-merge for minor and patch updates
         if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch' }}
@@ -46,7 +46,7 @@ jobs:
           echo "✅ Auto-approved and enabled auto-merge for ${{ steps.metadata.outputs.dependency-names }} (${{ steps.metadata.outputs.update-type }})"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PR_AUTOMATION }}
       - name: Skip major updates
         if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-major' }}
         run: |
@@ -71,4 +71,4 @@ jobs:
           \`\`\`"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PR_AUTOMATION }}
