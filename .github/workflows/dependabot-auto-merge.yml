@@ -1,0 +1,60 @@
+name: Dependabot Auto-Approve and Auto-Merge
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  dependabot:
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]'
+    steps:
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Auto-approve and enable auto-merge for minor and patch updates
+        if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch' }}
+        run: |
+          # Approve the PR
+          gh pr review --approve "$PR_URL"
+
+          # Enable auto-merge with squash merge
+          gh pr merge --auto --squash "$PR_URL"
+
+          echo "✅ Auto-approved and enabled auto-merge for ${{ steps.metadata.outputs.dependency-names }} (${{ steps.metadata.outputs.update-type }})"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Skip major updates
+        if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-major' }}
+        run: |
+          echo "🔶 Skipping auto-merge for major update: ${{ steps.metadata.outputs.dependency-names }} (${{ steps.metadata.outputs.update-type }})"
+          echo "Major updates require manual review."
+
+      - name: Comment on PR with auto-merge status
+        if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch' }}
+        run: |
+          COMMENT_BODY=$(cat <<'EOF'
+🤖 **Dependabot Auto-Merge**
+
+This PR has been automatically approved and auto-merge has been enabled because it contains only **${{ steps.metadata.outputs.update-type }}** updates.
+
+**Updated dependencies:**
+- ${{ steps.metadata.outputs.dependency-names }}
+
+The PR will be automatically merged once all required status checks pass.
+
+If you need to make changes or want to review manually, you can disable auto-merge with:
+EOF
+          gh pr comment "$PR_URL" --body "$COMMENT_BODY"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
