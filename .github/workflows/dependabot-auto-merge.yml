@@ -36,7 +36,13 @@ jobs:
       - name: Skip major updates
         if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-major' }}
         run: |
-          COMMENT_BODY="🤖 **Dependabot Auto-Merge**
+          echo "🔶 Skipping auto-merge for major update: ${{ steps.metadata.outputs.dependency-names }} (${{ steps.metadata.outputs.update-type }})"
+          echo "Major updates require manual review."
+
+      - name: Comment on PR with auto-merge status
+        if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch' }}
+        run: |
+          gh pr comment "$PR_URL" --body "🤖 **Dependabot Auto-Merge**
 
           This PR has been automatically approved and auto-merge has been enabled because it contains only **${{ steps.metadata.outputs.update-type }}** updates.
 
@@ -45,15 +51,10 @@ jobs:
 
           The PR will be automatically merged once all required status checks pass.
 
-          If you need to make changes or want to review manually, you can disable auto-merge with:"
-
-          gh pr comment "$PR_URL" --body "$COMMENT_BODY"
-
-      - name: Comment on PR with auto-merge status
-        if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch' }}
-        run: |
-          COMMENT_BODY="🤖 **Dependabot Auto-Merge**\n\nThis PR has been automatically approved and auto-merge has been enabled because it contains only **${{ steps.metadata.outputs.update-type }}** updates.\n\n**Updated dependencies:**\n- ${{ steps.metadata.outputs.dependency-names }}\n\nThe PR will be automatically merged once all required status checks pass.\n\nIf you need to make changes or want to review manually, you can disable auto-merge with:"
-          gh pr comment "$PR_URL" --body "$COMMENT_BODY"
+          **To disable auto-merge manually:**
+          \`\`\`bash
+          gh pr merge --disable-auto ${{ github.event.pull_request.number }}
+          \`\`\`"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
