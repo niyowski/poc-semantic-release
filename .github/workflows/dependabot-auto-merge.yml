@@ -19,6 +19,20 @@ jobs:
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
 
+      - name: Auto-approve and enable auto-merge for security updates
+        if: ${{ steps.metadata.outputs.dependency-group == 'security-updates' }}
+        run: |
+          # Approve the PR
+          gh pr review --approve "$PR_URL"
+
+          # Enable auto-merge with squash merge
+          gh pr merge --auto --squash "$PR_URL"
+
+          echo "✅ Auto-approved and enabled auto-merge for security updates: ${{ steps.metadata.outputs.dependency-names }}"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Auto-approve and enable auto-merge for minor and patch updates
         if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch' }}
         run: |
@@ -32,7 +46,6 @@ jobs:
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Skip major updates
         if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-major' }}
         run: |
