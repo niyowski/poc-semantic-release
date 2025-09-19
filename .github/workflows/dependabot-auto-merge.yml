@@ -42,19 +42,17 @@ jobs:
       - name: Comment on PR with auto-merge status
         if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch' }}
         run: |
-          gh pr comment "$PR_URL" --body "🤖 **Dependabot Auto-Merge**
+          COMMENT_BODY=$(cat <<'EOF'
+🤖 **Dependabot Auto-Merge**
 
-          This PR has been automatically approved and auto-merge has been enabled because it contains only **${{ steps.metadata.outputs.update-type }}** updates.
+This PR has been automatically approved and auto-merge has been enabled because it contains only **${{ steps.metadata.outputs.update-type }}** updates.
 
-          **Updated dependencies:**
-          - ${{ steps.metadata.outputs.dependency-names }}
+**Updated dependencies:**
+- ${{ steps.metadata.outputs.dependency-names }}
 
-          The PR will be automatically merged once all required status checks pass.
+The PR will be automatically merged once all required status checks pass.
 
-          If you need to make changes or want to review manually, you can disable auto-merge with:
-          \`\`\`
-          gh pr merge --disable-auto ${{ github.event.pull_request.number }}
-          \`\`\`"
+If you need to make changes or want to review manually, you can disable auto-merge with:
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
