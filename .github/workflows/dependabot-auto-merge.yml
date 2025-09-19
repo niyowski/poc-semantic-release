@@ -53,6 +53,8 @@ This PR has been automatically approved and auto-merge has been enabled because 
 The PR will be automatically merged once all required status checks pass.
 
 If you need to make changes or want to review manually, you can disable auto-merge with:
+EOF
+          gh pr comment "$PR_URL" --body "$COMMENT_BODY"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
