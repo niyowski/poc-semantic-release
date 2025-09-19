@@ -35,7 +35,7 @@ jobs:
 
       - name: Semantic Release
         id: semantic
-        uses: codfish/semantic-release-action@v3
+        uses: codfish/semantic-release-action@v4
         with:
           branches: |
             ['develop']
