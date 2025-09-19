@@ -34,7 +34,13 @@ jobs:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GITHUB_TOKEN: ${{ secrets.PR_AUTOMATION }}
 
-      - name: Auto-approve and enable auto-merge for minor and patch updates
+      - name: Skip major version updates
+        if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-major' }}
+        run: |
+          echo "🔶 Skipping auto-merge for major version update: ${{ steps.metadata.outputs.dependency-names }} (${{ steps.metadata.outputs.update-type }})"
+          echo "Major version updates require manual review."
+
+      - name: Auto-approve and enable auto-merge for minor and patch version updates
         if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch' }}
         run: |
           # Approve the PR
@@ -44,18 +50,8 @@ jobs:
           gh pr merge --auto --squash "$PR_URL"
 
           echo "✅ Auto-approved and enabled auto-merge for ${{ steps.metadata.outputs.dependency-names }} (${{ steps.metadata.outputs.update-type }})"
-        env:
-          PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{ secrets.PR_AUTOMATION }}
-      - name: Skip major updates
-        if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-major' }}
-        run: |
-          echo "🔶 Skipping auto-merge for major update: ${{ steps.metadata.outputs.dependency-names }} (${{ steps.metadata.outputs.update-type }})"
-          echo "Major updates require manual review."
 
-      - name: Comment on PR with auto-merge status
-        if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch' }}
-        run: |
+          # Comment on PR with auto-merge status
           gh pr comment "$PR_URL" --body "🤖 **Dependabot Auto-Merge**
 
           This PR has been automatically approved and auto-merge has been enabled because it contains only **${{ steps.metadata.outputs.update-type }}** updates.
